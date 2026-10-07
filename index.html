@@ -425,6 +425,19 @@ ${o}，画面最长边会收到 ${Gc}px；不压就按原样存进去。`}async 
     object-position: center;
   }
 
+  .pd-archive-main.portfolio-natural-cover:not(:fullscreen):not(.portfolio-pseudo-fullscreen) .pd-archive-page:first-child {
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .pd-archive-main.portfolio-natural-cover:not(:fullscreen):not(.portfolio-pseudo-fullscreen) .pd-archive-page:first-child > img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: top center;
+  }
+
   .pd-portfolio-fullscreen-button {
     position: absolute;
     top: 60px;
@@ -732,7 +745,11 @@ ${o}，画面最长边会收到 ${Gc}px；不压就按原样存进去。`}async 
       });
     };
     const decorateProjects = () => {
+      const activeRow = document.querySelector('.pd-archive-row.is-active');
+      const nextKey = activeRow?.querySelector('.pd-archive-row-title')?.textContent?.trim() || '';
+
       document.querySelectorAll('.pd-archive-main').forEach((host) => {
+        host.classList.toggle('portfolio-natural-cover', nextKey === '菲律宾金融贷款APP');
         const body = host.querySelector('.pd-archive-main-body');
         if (body) {
           const syncCoverHeight = () => {
@@ -762,8 +779,6 @@ ${o}，画面最长边会收到 ${Gc}px；不压就按原样存进去。`}async 
         }
       });
 
-      const activeRow = document.querySelector('.pd-archive-row.is-active');
-      const nextKey = activeRow?.querySelector('.pd-archive-row-title')?.textContent?.trim() || '';
       if (nextKey && nextKey !== activeProjectKey) {
         activeProjectKey = nextKey;
         document.querySelector('.pd-archive-main-body')?.scrollTo({ top: 0, behavior: 'instant' });
